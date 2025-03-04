@@ -59,3 +59,41 @@ type nombreProducto = "nombre"
 const inventario : Record<string, Producto> = {
     "Tuerca 1" : {nombre: "Tuerca 1", precio: 0.1 , enStock: true, categoria: "Tuercas"}
 }
+
+
+
+//ERRORES
+function division(a:number, b:number){
+    if(b===0){
+        throw new Error("No se puede dividir entre 0")
+    }
+    return a/b
+}
+
+try { 
+    console.log(division(2,0))
+} catch(error){
+    console.log("Error: ", error)
+}
+
+// Crea un archivo manejoErrores.ts en GitHub.
+// Escribe una función buscarProducto que reciba un nombre y busque el producto en el inventario (usando el Record anterior).
+// Si el producto no existe, lanza un error con throw new Error("Producto no encontrado").
+// Usa try...catch para llamar a la función y manejar posibles errores.
+function buscarProducto(nombre: string): string {
+    let producto = inventario[nombre]
+    if(!producto){
+        throw new Error("Producto no encontrado")
+    }
+    return `Producto encontrado: ${producto.nombre}, Precio: ${producto.precio}`
+}
+
+
+try {
+    console.log(buscarProducto("Tuerca 1")); // ✅ Producto encontrado
+    console.log(buscarProducto("Arandela")); // ❌ Error: Producto no encontrado
+} catch (error: unknown) {
+    if (error instanceof Error) {
+        console.error("Error encontrado:", error.message);
+    }
+}
